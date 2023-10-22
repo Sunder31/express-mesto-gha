@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { Errors } = require('../errors/errors');
+const { ErrorMessages, ErrorCodes } = require('../errors/errors');
 
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
@@ -8,13 +8,13 @@ const createUser = (req, res) => {
     .then((user) => res.status(201).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send({
-          message: Errors.userError400,
+        return res.status(ErrorCodes.errorCode400).send({
+          message: ErrorMessages.userError400,
         });
       }
 
-      return res.status(500).send({
-        message: Errors.error500,
+      return res.status(ErrorCodes.errorCode500).send({
+        message: ErrorMessages.error500,
       });
     });
 };
@@ -25,8 +25,8 @@ const getUsers = (req, res) => {
       res.status(200).send(users);
     })
     .catch(() => {
-      res.status(500).send({
-        message: Errors.error500,
+      res.status(ErrorCodes.errorCode500).send({
+        message: ErrorMessages.error500,
       });
     });
 };
@@ -37,20 +37,20 @@ const getUserById = (req, res) => {
   return User.findById(userId)
     .then((user) => {
       if (!user) {
-        return res.status(404).send({
-          message: Errors.userError404,
+        return res.status(ErrorCodes.errorCode404).send({
+          message: ErrorMessages.userError404,
         });
       }
       return res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return res.status(400).send({
-          message: Errors.userError400,
+        return res.status(ErrorCodes.errorCode400).send({
+          message: ErrorMessages.userError400,
         });
       }
-      return res.status(500).send({
-        message: Errors.error500,
+      return res.status(ErrorCodes.errorCode500).send({
+        message: ErrorMessages.error500,
       });
     });
 };
@@ -71,13 +71,13 @@ const updateUserProfile = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send({
-          message: Errors.profileError400,
+        return res.status(ErrorCodes.errorCode400).send({
+          message: ErrorMessages.profileError400,
         });
       }
 
-      return res.status(500).send({
-        message: Errors.error500,
+      return res.status(ErrorCodes.errorCode500).send({
+        message: ErrorMessages.error500,
       });
     });
 };
@@ -98,13 +98,13 @@ const updateAvatar = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send({
-          message: Errors.avatarError400,
+        return res.status(ErrorCodes.errorCode400).send({
+          message: ErrorMessages.avatarError400,
         });
       }
 
-      return res.status(500).send({
-        message: Errors.error500,
+      return res.status(ErrorCodes.errorCode500).send({
+        message: ErrorMessages.error500,
       });
     });
 };
