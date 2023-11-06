@@ -16,6 +16,7 @@ const ErrorCodes = {
   errorCode400: http2.constants.HTTP_STATUS_BAD_REQUEST,
   errorCode404: http2.constants.HTTP_STATUS_NOT_FOUND,
   errorCode500: http2.constants.HTTP_STATUS_INTERNAL_SERVER_ERROR,
+  errorCode401: http2.constants.HTTP_STATUS_UNAUTHORIZED,
 };
 
 module.exports = {
