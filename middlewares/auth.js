@@ -1,26 +1,25 @@
 const jwt = require('jsonwebtoken');
-const { ErrorCodes } = require('../errors/errors');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const { JWT_KEY = 'SECRET_KEY' } = process.env;
-
-const authError = (res) => res.status(401).send({ message: ErrorCodes.errorCode401 });
 
 const auth = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    next(authError);
+    next(new UnauthorizedError('Необходимо авторизоваться'));
   }
 
-  let payload;
+  let playload;
 
   try {
-    payload = jwt.verify(token, JWT_KEY);
-  } catch (err) {
-    next(authError);
+    playload = jwt.verify(token, JWT_KEY);
+  } catch {
+    next(new UnauthorizedError('Необходимо авторизоваться'));
   }
 
-  req.user = payload;
+  req.user = playload;
+
   next();
 };
 
