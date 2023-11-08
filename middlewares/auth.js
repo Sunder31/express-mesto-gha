@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    next(new UnauthorizedError('Необходимо авторизоваться'));
+    return next(new UnauthorizedError('Необходимо авторизоваться'));
   }
 
   let playload;
@@ -15,7 +15,7 @@ const auth = (req, res, next) => {
   try {
     playload = jwt.verify(token, JWT_KEY);
   } catch {
-    next(new UnauthorizedError('Необходимо авторизоваться'));
+    return next(new UnauthorizedError('Необходимо авторизоваться'));
   }
 
   req.user = playload;
